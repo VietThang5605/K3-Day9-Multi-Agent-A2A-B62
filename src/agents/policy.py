@@ -65,7 +65,7 @@ def decide_policy(
         assessment=Assessment(
             primary_issue=issue,
             case_status="action_required" if refund > 0 else "no_action",
-            confidence=0.95,
+            confidence=1.0,
         ),
         affected_entities=AffectedEntities(
             order_ids=[fulfillment.order_id], item_ids=fulfillment.item_ids,
