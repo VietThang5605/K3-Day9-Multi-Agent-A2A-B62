@@ -1,12 +1,12 @@
 {
-  "run_id": "5f01a565-f73c-49c8-bcfb-e56a18f41e9b",
-  "created_at": "2026-08-05T04:36:52.650077+00:00",
+  "run_id": "045c724f-8e3c-4485-8012-d4233e2706b1",
+  "created_at": "2026-08-05T08:03:03.763555+00:00",
   "runtime": {
     "python": "3.11",
     "orchestration": "LangGraph StateGraph",
     "trace_format": "JSONL"
   },
-  "llm_enabled": false,
+  "llm_enabled": true,
   "model": {
     "provider": "OpenRouter",
     "name": "qwen/qwen3.5-9b",
