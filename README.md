@@ -218,4 +218,48 @@ Kiểm tra logic, rồi chạy batch 50 case và audit artifact:
 .venv/bin/python -m src.main --audit-only
 ```
 
-Để bật OpenRouter, copy `.env.example` thành `.env`, đặt `OPENROUTER_API_KEY`, sau đó chạy `... src.main --use-llm`. Model cố định trong source là `qwen/qwen3.5-9b` (9B). Xem [architecture.md](architecture.md) để biết graph, quyền truy cập của agent và contract trace.
+## 11. Chạy với OpenRouter LLM (production trace)
+
+Model được cố định trong source là `qwen/qwen3.5-9b` (9B, dưới giới hạn 10B). Không ghi model name hoặc API key vào command line hay commit key vào Git.
+
+Tạo file `.env` cục bộ từ mẫu và điền API key OpenRouter của bạn:
+
+```bash
+cp .env.example .env
+```
+
+Mở `.env` và thay giá trị bằng key thật:
+
+```dotenv
+OPENROUTER_API_KEY=sk-or-v1-...
+```
+
+Xác nhận `.env` không bị Git theo dõi (lệnh không in key):
+
+```bash
+git check-ignore .env
+```
+
+Chạy lại toàn bộ 50 case với LLM audit calls, tối đa 4 case đồng thời:
+
+```bash
+.venv/bin/python -m src.main --use-llm --max-concurrency 4
+```
+
+Các phép tính tiền, chọn policy, evidence và verifier vẫn là deterministic Python. LLM chỉ nhận facts đã xác thực để tạo audit/handoff trace; không có quyền thay đổi output policy. Sau khi chạy, kiểm tra artifact:
+
+```bash
+.venv/bin/python -m src.main --audit-only
+rg '"event_type": "model_completed"' logging/trace.jsonl | wc -l
+```
+
+Lệnh đầu phải in `Audit passed`; lệnh sau phải lớn hơn 0 khi LLM gọi thành công. `logging/metadata.json` cũng phải có `"llm_enabled": true`.
+
+Cuối cùng, đóng gói đúng cấu trúc mà hệ thống chấm yêu cầu và kiểm tra manifest ZIP:
+
+```bash
+zip -X submission_output_llm.zip output/EC_*.json
+unzip -Z1 submission_output_llm.zip | sort
+```
+
+ZIP chỉ được có 50 đường dẫn từ `output/EC_001.json` đến `output/EC_050.json`. Xem [architecture.md](architecture.md) để biết graph, quyền truy cập của agent và contract trace.
