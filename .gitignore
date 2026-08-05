@@ -1,0 +1,9 @@
+.env
+.DS_Store
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+output.zip
+logging/run.log
+logging/*.sqlite

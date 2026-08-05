@@ -1,4 +1,4 @@
-# Member Role Report — Day 9: Multi Agent A2A
+# Member Role Report — Day 9: Multi-Agent E-commerce Dispute Resolution
 
 > Mỗi thành viên trong nhóm tự hoàn thành mẫu này để báo cáo đúng vai trò, phần việc và mức hiểu của mình. Không sao chép nguyên báo cáo chung hoặc báo cáo của thành viên khác. Thay nội dung trong dấu `[ ]` và xóa các dòng hướng dẫn không cần thiết trước khi nộp.
 
@@ -97,11 +97,11 @@ Nếu chưa xử lý xong:
 
 Giải thích ngắn gọn bằng lời của bạn:
 
-1. Dữ liệu đi từ Crossref đến vector index như thế nào?
-2. Evaluation set và ground-truth document IDs dùng để đo retrieval/answer quality ra sao?
-3. Quality checks khác freshness monitoring ở điểm nào trong bài lab?
-4. Vì sao phải dùng cùng test set cho baseline, corrupted và repaired?
-5. Repair được xem là thành công dựa trên artifact và metric nào?
+1. Case JSON đi qua LangGraph nodes nào trước khi được ghi vào `output/`?
+2. Vì sao Order & Fulfillment và Payment chạy song song được, nhưng Policy phải chờ cả hai?
+3. Điều kiện `abs(payment - item - freight) <= 0.10` bảo vệ against lỗi gì, và khi nào nó được áp dụng?
+4. Vì sao policy/refund/evidence phải deterministic thay vì giao hoàn toàn cho model?
+5. Verifier, `trace.jsonl`, `metadata.json` và output audit bảo đảm tính đúng đắn/tái lập như thế nào?
 
 **Câu trả lời:**
 
